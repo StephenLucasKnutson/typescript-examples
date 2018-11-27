@@ -1,0 +1,39 @@
+import { Record } from 'immutable';
+import { generateId } from "../util/Reducer";
+
+const partyMemberDefaults = {
+    privateId: '-1',
+    firstName: '-1',
+    lastName: '-1',
+    age: -1,
+    professionId: '-1'
+};
+
+interface IPartyMemberParamsCreate {
+    firstName: string,
+    lastName: string,
+    age: number;
+    professionId: string;
+}
+
+export interface IPartyMemberParams {
+    privateId: string,
+    firstName: string,
+    lastName: string,
+    age: number;
+    professionId: string;
+}
+
+export class PartyMember extends Record(partyMemberDefaults) {
+    constructor(params: IPartyMemberParamsCreate = partyMemberDefaults) {
+        super({...params, 'privateId': generateId()});
+    }
+
+    get<T extends keyof IPartyMemberParams>(value: T): IPartyMemberParams[T] {
+        return super.get(value);
+    }
+
+    set<T extends keyof IPartyMemberParams>(key: T, value: IPartyMemberParams[T]): PartyMember {
+        return super.set(key, value);
+    }
+}
