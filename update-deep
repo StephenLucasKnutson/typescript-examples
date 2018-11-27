@@ -1,0 +1,7 @@
+export const updatePosition = (originalState: StateData, timeElapsed: number): StateData => {
+    const currentVelocity: Vector2D = originalState.get('party').get('currentVelocity');
+    const currentPosition: Vector2D = originalState.get('party').get('currentPosition');
+    const newPosition = Vector2D.sum(currentPosition, Vector2D.scaled(currentVelocity, timeElapsed));
+    //return originalState.setIn(['party', 'currentPosition'], newPosition);
+    return originalState.set('party', originalState.get('party').set('currentPosition', newPosition));
+};
